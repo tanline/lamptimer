@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 import calendar
 from astral import Astral
 
@@ -8,30 +9,6 @@ def get_astral_city():
     a.solar_depression = 'civil'
     found_city = a[city_name]
     return found_city
-
-def print_time(time):
-    hour = time['dusk'].hour
-    minute = time['dusk'].minute
-    if minute >= 45:
-        minute = 0
-        hour += 1
-    elif minute >=15:
-        minute = 30
-    else:
-        minute = 0
-    print('Dusk: %02d:%02d' % (hour, minute))
-
-def pretty_time(time):
-    hour = time['dusk'].hour
-    minute = time['dusk'].minute
-    if minute >= 45:
-        minute = 0
-        hour += 1
-    elif minute >=15:
-        minute = 30
-    else:
-        minute = 0
-    return '{}:{}'.format(str(hour).zfill(2), str(minute).zfill(2))
 
 # From the given time, determine the month and year,
 # and calculate the time of Dusk for each day
@@ -54,17 +31,54 @@ def calculate_dusk_for_days_in_month(given_time):
 
     return dusk_times
 
+# Returns an integer representing the number of seconds
+# between midnight and the given time.
+def get_seconds_since_midnight(time):
+    midnight = time.replace(hour=0, minute=0, second=0, microsecond=0)
+    x = (time - midnight).seconds
+    print x
+    return x
+
+def get_time_from_seconds_since_midnight(seconds_since_midnight):
+    midnight = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    delta = timedelta(seconds=seconds_since_midnight)
+    print midnight + delta
+
 def print_as_csv(dusk_times_for_month):
     print('Date, Actual Dusk Time, Rounded Dusk Time\n')
     for day in dusk_times_for_month:
-        print '{}, {}, {}'.format(day[0], str(day[1]['dusk']), pretty_time(day[1]))
+        print '{}, {}, {}'.format(day[0], str(day[1]['dusk']), str(round_time(day[1])))
+
+class Day:
+    def __init__(self, date, location):
+        self.date = date
+        self._dusk = None
+        self.location = location
+
+    def dusk_time(self):
+        if self._dusk == None:
+            sun = self.location.sun(date=calc_date, local=True)
+            self.dusk = sun['dusk']
+        return self._dusk
+
+    # Returns a datetime value, rounded to the nearest half-hour.
+    def rounded_dusk_time(time):
+        dusk_hour = self._dusk.hour
+        dusk_minute = self._dusk.minute
+        if dusk_minute >= 45:
+            dusk_minute = 0
+            dusk_hour += 1
+        elif dusk_minute >=15:
+            dusk_minute = 30
+        else:
+            dusk_minute = 0
+        return self.dusk_time().replace(hour=dusk_hour, minute=dusk_minute, second=0)
 
 
-if __name__ == '__main__':
-    city = get_astral_city()
-    print('Information for %s/%s\n' % (city.name, city.region))
-    x = calculate_dusk_for_days_in_month(datetime.datetime.now())
-    print_as_csv(x)
+# if __name__ == '__main__':
+    # get_time_from_seconds_since_midnight(get_seconds_since_midnight(datetime.datetime.now()))
+    # print('Information for %s/%s\n' % (city.name, city.region))
+    # x = calculate_dusk_for_days_in_month(datetime.datetime.now())
+    # print_as_csv(x)
     # sun = city.sun(date=datetime.datetime.now(), local=True)
     # print('Dusk: %s' % str(sun['dusk']))
-    # print_time(sun)

@@ -3,66 +3,20 @@ from datetime import timedelta
 import calendar
 from astral import Astral
 
-def get_astral_city():
-    city_name = 'Toronto'
-    a = Astral()
-    a.solar_depression = 'civil'
-    found_city = a[city_name]
-    return found_city
-
-# From the given time, determine the month and year,
-# and calculate the time of Dusk for each day
-# Return a list of the same size of the number of days in the given month, where
-# each index contains the calculated datetime for the given day (note: index 0 is the first of the month)
-def calculate_dusk_for_days_in_month(given_time):
-    # Get the last day of the given month
-    last_day_of_month = datetime.datetime(given_time.year, given_time.month, calendar.monthrange(given_time.year, 1)[1])
-    # Start calculation from the first day of the given month
-    calc_date = datetime.datetime(given_time.year, given_time.month, 1)
-
-    dusk_times = []
-    print('Date, Actual Dusk Time, Rounded Dusk Time\n')
-    while calc_date<=last_day_of_month:
-        sun = city.sun(date=calc_date, local=True)
-        tuple = [calc_date.strftime('%Y-%m-%d'), sun]
-        dusk_times.append(tuple)
-        # print '{}, {}, {}'.format(calc_date.strftime('%Y-%m-%d'), str(sun['dusk']), pretty_time(sun))
-        calc_date += datetime.timedelta(days=1)
-
-    return dusk_times
-
-# Returns an integer representing the number of seconds
-# between midnight and the given time.
-def get_seconds_since_midnight(time):
-    midnight = time.replace(hour=0, minute=0, second=0, microsecond=0)
-    x = (time - midnight).seconds
-    print x
-    return x
-
-def get_time_from_seconds_since_midnight(seconds_since_midnight):
-    midnight = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-    delta = timedelta(seconds=seconds_since_midnight)
-    print midnight + delta
-
-def print_as_csv(dusk_times_for_month):
-    print('Date, Actual Dusk Time, Rounded Dusk Time\n')
-    for day in dusk_times_for_month:
-        print '{}, {}, {}'.format(day[0], str(day[1]['dusk']), str(round_time(day[1])))
-
 class Day:
     def __init__(self, date, location):
-        self.date = date
-        self._dusk = None
+        self.date = zeroify_date(date)
         self.location = location
+        self._dusk = self._calculate_dusk_time()
+
+    def __str__(self):
+        return '{}, {}, {}'.format(self.date, str(self.dusk_time()), str(self.rounded_dusk_time()))
 
     def dusk_time(self):
-        if self._dusk == None:
-            sun = self.location.sun(date=calc_date, local=True)
-            self.dusk = sun['dusk']
         return self._dusk
 
     # Returns a datetime value, rounded to the nearest half-hour.
-    def rounded_dusk_time(time):
+    def rounded_dusk_time(self):
         dusk_hour = self._dusk.hour
         dusk_minute = self._dusk.minute
         if dusk_minute >= 45:
@@ -74,11 +28,40 @@ class Day:
             dusk_minute = 0
         return self.dusk_time().replace(hour=dusk_hour, minute=dusk_minute, second=0)
 
+    def _calculate_dusk_time(self):
+        sun = self.location.sun(date=self.date, local=True)
+        return sun['dusk']
 
-# if __name__ == '__main__':
-    # get_time_from_seconds_since_midnight(get_seconds_since_midnight(datetime.datetime.now()))
-    # print('Information for %s/%s\n' % (city.name, city.region))
-    # x = calculate_dusk_for_days_in_month(datetime.datetime.now())
-    # print_as_csv(x)
-    # sun = city.sun(date=datetime.datetime.now(), local=True)
-    # print('Dusk: %s' % str(sun['dusk']))
+class Month:
+    def __init__(self, month, location):
+        self.date = month
+        self.location = location
+        self.days = self._populate_days()
+
+    def _populate_days(self):
+        days = []
+        days_in_month = calendar.monthrange(self.date.year, self.date.month)[1]
+
+        for i in range(days_in_month):
+            new_date = self.date.replace(day=(i+1))
+            days.append(Day(new_date, self.location))
+
+        return days
+
+    def print_as_csv(self):
+        print('\nDate, Actual Dusk Time, Rounded Dusk Time')
+        for day in self.days:
+            print day
+
+def get_astral_city():
+    city_name = 'Toronto'
+    a = Astral()
+    a.solar_depression = 'civil'
+    found_city = a[city_name]
+    return found_city
+
+def zeroify_date(date):
+    return date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+if __name__ == '__main__':
+    print 'lampTimer!'

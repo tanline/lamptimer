@@ -14,7 +14,6 @@ def calculate_dusk_time(date, location):
     sun = location.sun(date=date, local=True)
     return sun['dusk']
 
-
 def zeroify_date(date):
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
 

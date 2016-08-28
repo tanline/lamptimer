@@ -5,7 +5,7 @@ class Day:
     def __init__(self, date, location):
         self.date = lamptimer.zeroify_date(date)
         self.location = location
-        self._dusk = lamptimer.calculate_dusk_time(date, location)
+        self._dusk = self._calculate_dusk_time()
 
     def __str__(self):
         return '{}, {}, {}'.format(self.date, str(self.dusk_time()), str(self.rounded_dusk_time()))

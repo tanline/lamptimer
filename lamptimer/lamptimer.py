@@ -3,12 +3,17 @@ from astral import Astral
 from day import Day
 from month import Month
 
-def get_astral_city():
-    city_name = 'Toronto'
-    a = Astral()
-    a.solar_depression = 'civil'
-    found_city = a[city_name]
-    return found_city
+class LampTimer:
+    def __init__(self, city, from_date, to_date):
+        self.from_date = from_date
+        self.to_date = to_date
+        self.location = self._get_astral_city(city)
+
+    def _get_astral_city(self, city_name='Toronto'):
+        a = Astral()
+        a.solar_depression = 'civil'
+        found_city = a[city_name]
+        return found_city
 
 def calculate_dusk_time(date, location):
     sun = location.sun(date=date, local=True)
@@ -16,16 +21,6 @@ def calculate_dusk_time(date, location):
 
 def zeroify_date(date):
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
-
-def print_months(first_month, last_month, year):
-    if (first_month > last_month):
-        return
-
-    location = get_astral_city()
-    for i in range(first_month,last_month+1):
-        month = Month(datetime.datetime(year, i, 1), location)
-        month.print_as_csv()
-        print '\n'
 
 def print_days_of_rounded_dusk_change(month):
     days = month.get_days_of_rounded_dusk_change()
@@ -36,11 +31,12 @@ def print_days_and_times_for_lamp_change(first_month, last_month, year):
     if (first_month > last_month):
         return
 
-    location = get_astral_city()
     days_of_change = []
 
+    lt = LampTimer('Toronto', datetime.datetime(year, first_month, 1), datetime.datetime(year, last_month, 1))
+
     for i in range(first_month, last_month+1):
-        month = Month(datetime.datetime(year, i, 1), location)
+        month = Month(datetime.datetime(year, i, 1), lt.location)
         days = month.get_days_of_rounded_dusk_change()
         for day in days:
             if (len(days_of_change) == 0):

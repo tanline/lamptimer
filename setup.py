@@ -20,4 +20,5 @@ setup(name='lamptimer',
       test_suite='nose.collector',
       tests_require=['nose', 'nose-cover3'],
       include_package_data=True,
-      zip_safe=False)
+      zip_safe=False
+)

@@ -1,3 +1,7 @@
+*.pyc
+build/*
+dist/*
+*.egg*
+
 *.swp
 .DS_Store
-*.pyc

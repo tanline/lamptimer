@@ -56,6 +56,3 @@ def dusks_differ_by_one_hour(day1, day2):
     min_diff = dusk1.minute - dusk2.minute
 
     return ((abs(hour_diff) == 1) and (min_diff == 0))
-
-def cli():
-    print_days_and_times_for_lamp_change(9,12,2016)

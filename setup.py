@@ -14,7 +14,7 @@ setup(name='lamptimer',
       ],
       entry_points={
           'console_scripts': [
-              'lamptimer=lamptimer.lamptimer:cli',
+              'lamptimer=lamptimer.__main__:main',
           ]
       },
       test_suite='nose.collector',

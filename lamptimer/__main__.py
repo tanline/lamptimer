@@ -19,16 +19,16 @@ def main(args=None):
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    date_help = 'a valid date in the form of YYYY-MM-DD'
+    date_help = 'a valid date of the form YYYY-MM'
     parser.add_argument('from_date', help=date_help, type=valid_date)
     parser.add_argument('to_date', help=(date_help + ". NOTE: date must be greater than or equal to the from_date"), type=valid_date)
     return parser
 
 def valid_date(string):
     try:
-        date = datetime.datetime.strptime(string, '%Y-%m-%d')
+        date = datetime.datetime.strptime(string, '%Y-%m')
     except ValueError:
-        msg = "%r is not a valid date. Dates should be of the form YYYY-MM-DD" % string
+        msg = "%r is not a valid date. Dates should be of the form YYYY-MM" % string
         raise argparse.ArgumentTypeError(msg)
     else:
         return date

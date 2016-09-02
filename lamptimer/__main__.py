@@ -14,8 +14,7 @@ def main(args=None):
         msg = "The From Date must be before, or equal to, the To Date"
         parser.error(msg)
 
-    print args
-    # print_days_and_times_for_lamp_change(from_month,to_month,year)
+    print_days_and_times_for_lamp_change(args.from_date, args.to_date)
 
 def create_parser():
     parser = argparse.ArgumentParser()

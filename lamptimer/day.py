@@ -8,7 +8,11 @@ class Day:
         self._dusk = self._calculate_dusk_time()
 
     def __str__(self):
-        return '{}, {}, {}'.format(self.date, str(self.dusk_time()), str(self.rounded_dusk_time()))
+        date_str = self.date.date()
+        dusk_str = self.dusk_time().strftime('%X%z')
+        rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
+
+        return '{}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str)
 
     def dusk_time(self):
         return self._dusk

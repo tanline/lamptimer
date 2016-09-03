@@ -84,7 +84,7 @@ def dusks_differ_by_one_hour(day1, day2):
     hour_diff = abs(dusk1.hour - dusk2.hour)
 
     if hour_diff ==  1:
-        # Rounded dusk times are always rounded to the nearest half-hour
+        # Our dusk times are always rounded to the nearest half-hour
         return abs(dusk1.minute - dusk2.minute) == 0
     else:
         return hour_diff > 0

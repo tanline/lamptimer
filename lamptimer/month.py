@@ -1,6 +1,5 @@
-import datetime
+from day import Day
 import calendar
-import day
 
 class Month:
     def __init__(self, month, location):
@@ -14,7 +13,7 @@ class Month:
 
         for i in range(days_in_month):
             new_date = self.date.replace(day=(i+1))
-            days.append(day.Day(new_date, self.location))
+            days.append(Day(new_date, self.location))
 
         return days
 

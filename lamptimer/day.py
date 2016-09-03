@@ -1,9 +1,6 @@
-import datetime
-import lamptimer
-
 class Day:
     def __init__(self, date, location):
-        self.date = lamptimer.zeroify_date(date)
+        self.date = self._zeroify_date(date)
         self.location = location
         self._dusk = self._calculate_dusk_time()
 
@@ -33,4 +30,8 @@ class Day:
     def _calculate_dusk_time(self):
         sun = self.location.sun(date=self.date, local=True)
         return sun['dusk']
+
+    @staticmethod
+    def _zeroify_date(date):
+        return date.replace(hour=0, minute=0, second=0, microsecond=0)
 

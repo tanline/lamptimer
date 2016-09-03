@@ -1,7 +1,6 @@
+from month import Month, Day
 import datetime
 from astral import Astral
-from day import Day
-from month import Month
 
 class LampTimer:
     def __init__(self, city, from_date, to_date):
@@ -50,13 +49,6 @@ class LampTimer:
     def _validate_dates(self):
         if self.from_date > self.to_date:
             raise ValueError('Invalid Dates. From Date is after To Date.')
-
-def calculate_dusk_time(date, location):
-    sun = location.sun(date=date, local=True)
-    return sun['dusk']
-
-def zeroify_date(date):
-    return date.replace(hour=0, minute=0, second=0, microsecond=0)
 
 # Create a list consisting of datetimes
 # representing the months between the given datetimes

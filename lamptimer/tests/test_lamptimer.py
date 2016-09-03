@@ -7,8 +7,7 @@ class TestLampTimerBase(unittest.TestCase):
     def setUp(self):
         self.location = self.get_astral_city()
 
-    def create_date(self, time):
-        time = lamptimer.zeroify_date(time)
+    def create_day(self, time):
         return lamptimer.Day(time, self.location)
 
     @staticmethod
@@ -21,8 +20,8 @@ class TestLampTimerBase(unittest.TestCase):
 
 class TestLampTimer(TestLampTimerBase):
     def test_lamp_timer_create(self):
-        from_time = lamptimer.zeroify_date(datetime.datetime(2016,01,01))
-        to_time = lamptimer.zeroify_date(datetime.datetime(2017,01,01))
+        from_time = datetime.datetime(2016,01,01)
+        to_time = datetime.datetime(2017,01,01)
         lt = lamptimer.LampTimer('Toronto', from_time, to_time)
 
         self.assertEqual(from_time, lt.from_date)
@@ -33,10 +32,10 @@ class TestLampTimer(TestLampTimerBase):
             lamptimer.LampTimer('Toronto', to_time, from_time)
 
     def test_dusks_differ_by_one_hour(self):
-        d1 = self.create_date(datetime.datetime(2016,01,01))
-        d2 = self.create_date(datetime.datetime(2016,01,05))
-        d3 = self.create_date(datetime.datetime(2016,01,25))
-        d4 = self.create_date(datetime.datetime(2016,03,15))
+        d1 = self.create_day(datetime.datetime(2016,01,01))
+        d2 = self.create_day(datetime.datetime(2016,01,05))
+        d3 = self.create_day(datetime.datetime(2016,01,25))
+        d4 = self.create_day(datetime.datetime(2016,03,15))
 
         self.assertEqual(False, lamptimer.dusks_differ_by_one_hour(d1, d2))
         self.assertEqual(False, lamptimer.dusks_differ_by_one_hour(d1, d3))
@@ -54,19 +53,9 @@ class TestLampTimer(TestLampTimerBase):
 
         self.assertEqual(expected_months, months)
 
-    def test_zeroify_date(self):
-        date = datetime.datetime(2017,2,1, 12, 30, 05)
-        zero_date = lamptimer.zeroify_date(date)
-
-        self.assertEqual(0, zero_date.hour)
-        self.assertEqual(0, zero_date.minute)
-        self.assertEqual(0, zero_date.second)
-        self.assertEqual(0, zero_date.microsecond)
-
-
 class TestDate(TestLampTimerBase):
     def test_date_create(self):
-        time = lamptimer.zeroify_date(datetime.datetime(2016,01,01))
+        time = datetime.datetime(2016,01,01)
         newDay = lamptimer.Day(time, self.location)
         self.assertEqual(newDay.date, time)
         self.assertEqual(newDay.location, self.location)
@@ -74,7 +63,7 @@ class TestDate(TestLampTimerBase):
 
 class TestMonth(TestLampTimerBase):
     def test_month_create(self):
-        time = lamptimer.zeroify_date(datetime.datetime(2016,01,01))
+        time = datetime.datetime(2016,01,01)
         newMonth = lamptimer.Month(time, self.location)
         self.assertEqual(newMonth.date, time)
         self.assertEqual(newMonth.location, self.location)

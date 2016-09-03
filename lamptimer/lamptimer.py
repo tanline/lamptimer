@@ -55,6 +55,8 @@ def calculate_dusk_time(date, location):
 def zeroify_date(date):
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
 
+# Create a list consisting of datetimes
+# representing the months between the given datetimes
 def month_range(from_date, to_date):
     l = []
     year = from_date.year
@@ -73,11 +75,16 @@ def month_range(from_date, to_date):
     return l
 
 def dusks_differ_by_one_hour(day1, day2):
-    dusk1 = day1.rounded_dusk_time()
-    dusk2 = day2.rounded_dusk_time()
+    dusk1 = day1.rounded_dusk_time().time()
+    dusk2 = day2.rounded_dusk_time().time()
 
-    diff = abs(dusk2 - dusk1)
-    return diff.seconds >= 3600
+    hour_diff = abs(dusk1.hour - dusk2.hour)
+
+    if hour_diff ==  1:
+        # Rounded dusk times are always rounded to the nearest half-hour
+        return abs(dusk1.minute - dusk2.minute) == 0
+    else:
+        return hour_diff > 0
 
 def print_days_of_rounded_dusk_change(month):
     for day in month.get_days_of_rounded_dusk_change():

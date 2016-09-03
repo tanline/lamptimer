@@ -27,6 +27,7 @@ class TestLampTimer(TestLampTimerBase):
 
         self.assertEqual(from_time, lt.from_date)
         self.assertEqual(to_time, lt.to_date)
+        self.assertEqual(13, len(lt.months))
 
         with self.assertRaises(ValueError):
             lamptimer.LampTimer('Toronto', to_time, from_time)

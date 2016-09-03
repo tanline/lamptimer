@@ -9,29 +9,34 @@ class LampTimer:
         self.to_date = to_date
         self._validate_dates()
         self.location = self._get_astral_city(city)
+        self.months = self._populate_months()
 
     def _get_astral_city(self, city_name):
         a = Astral()
         a.solar_depression = 'civil'
         found_city = a[city_name]
+
         return found_city
+
+    def _populate_months(self):
+        months = []
+        for date in month_range(self.from_date, self.to_date):
+            months.append(Month(date, self.location))
+
+        return months
 
     def days_of_dusk_change(self):
         days_of_change = []
-
-        for month_date in month_range(self.from_date, self.to_date):
-            month = Month(month_date, self.location)
-            days = month.get_days_of_rounded_dusk_change()
-            for day in days:
+        for month in self.months:
+            for day in month.get_days_of_rounded_dusk_change():
                 days_of_change.append(day)
 
         return days_of_change
 
     def days_for_lamp_change(self):
         days = []
-
         for day in self.days_of_dusk_change():
-            if (len(days) == 0):
+            if len(days) == 0:
                 days.append(day)
                 continue
             if dusks_differ_by_one_hour(days[-1], day):
@@ -40,7 +45,7 @@ class LampTimer:
         return days
 
     def _validate_dates(self):
-        if (self.from_date > self.to_date):
+        if self.from_date > self.to_date:
             raise ValueError('Invalid Dates. From Date is after To Date.')
 
 def calculate_dusk_time(date, location):
@@ -56,7 +61,7 @@ def month_range(from_date, to_date):
     month = from_date.month
     last_added_date = None
 
-    while (last_added_date != to_date):
+    while last_added_date != to_date:
         if not last_added_date is None:
             month += 1
             if month > 12:
@@ -72,7 +77,7 @@ def dusks_differ_by_one_hour(day1, day2):
     dusk2 = day2.rounded_dusk_time()
 
     diff = abs(dusk2 - dusk1)
-    return (diff.seconds >= 3600)
+    return diff.seconds >= 3600
 
 def print_days_of_rounded_dusk_change(month):
     for day in month.get_days_of_rounded_dusk_change():

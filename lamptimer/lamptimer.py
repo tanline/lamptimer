@@ -7,13 +7,41 @@ class LampTimer:
     def __init__(self, city, from_date, to_date):
         self.from_date = from_date
         self.to_date = to_date
+        self._validate_dates()
         self.location = self._get_astral_city(city)
 
-    def _get_astral_city(self, city_name='Toronto'):
+    def _get_astral_city(self, city_name):
         a = Astral()
         a.solar_depression = 'civil'
         found_city = a[city_name]
         return found_city
+
+    def days_of_dusk_change(self):
+        days_of_change = []
+
+        for month_date in month_range(self.from_date, self.to_date):
+            month = Month(month_date, self.location)
+            days = month.get_days_of_rounded_dusk_change()
+            for day in days:
+                days_of_change.append(day)
+
+        return days_of_change
+
+    def days_for_lamp_change(self):
+        days = []
+
+        for day in self.days_of_dusk_change():
+            if (len(days) == 0):
+                days.append(day)
+                continue
+            if dusks_differ_by_one_hour(days[-1], day):
+                days.append(day)
+
+        return days
+
+    def _validate_dates(self):
+        if (self.from_date > self.to_date):
+            raise ValueError('Invalid Dates. From Date is after To Date.')
 
 def calculate_dusk_time(date, location):
     sun = location.sun(date=date, local=True)
@@ -22,56 +50,10 @@ def calculate_dusk_time(date, location):
 def zeroify_date(date):
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
 
-def print_days_of_rounded_dusk_change(month):
-    days = month.get_days_of_rounded_dusk_change()
-    for day in days:
-        print day
-
-def print_days_and_times_for_lamp_change(from_date, to_date):
-    if (from_date > to_date):
-        print 'Invalid Dates!'
-        return
-
-    days_of_change = []
-
-    lt = LampTimer('Toronto', from_date, to_date)
-
-    print 'Date, Dusk Time, Rounded Dusk Time'
-
-    for month_date in month_range(from_date, to_date):
-        month = Month(month_date, lt.location)
-        days = month.get_days_of_rounded_dusk_change()
-        for day in days:
-            days_of_change.append(day)
-            # if (len(days_of_change) == 0):
-                # days_of_change.append(day)
-                # continue
-            # if dusks_differ_by_one_hour(day, days_of_change[-1]):
-                # days_of_change.append(day)
-
-    for day in filtered_days_of_change(days_of_change):
-        print day
-
-def filtered_days_of_change(days_of_change):
-    last_day = None
-
-    filtered_list = []
-
-    for day in days_of_change:
-        if (len(filtered_list) == 0):
-            filtered_list.append(day)
-            continue
-        if dusks_differ_by_one_hour(filtered_list[-1], day):
-            filtered_list.append(day)
-
-    return filtered_list
-
 def month_range(from_date, to_date):
     l = []
-
     year = from_date.year
     month = from_date.month
-
     last_added_date = None
 
     while (last_added_date != to_date):
@@ -85,10 +67,20 @@ def month_range(from_date, to_date):
 
     return l
 
-
 def dusks_differ_by_one_hour(day1, day2):
     dusk1 = day1.rounded_dusk_time()
     dusk2 = day2.rounded_dusk_time()
 
     diff = abs(dusk2 - dusk1)
     return (diff.seconds >= 3600)
+
+def print_days_of_rounded_dusk_change(month):
+    for day in month.get_days_of_rounded_dusk_change():
+        print day
+
+def print_days_and_times_for_lamp_change(from_date, to_date):
+    lt = LampTimer('Toronto', from_date, to_date)
+
+    print 'Date, Dusk Time, Rounded Dusk Time'
+    for day in lt.days_for_lamp_change():
+        print day

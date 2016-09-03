@@ -25,6 +25,7 @@ class LampTimer:
 
         return months
 
+    # A list of days on which the rounded time of dusk changes
     def days_of_dusk_change(self):
         days_of_change = []
         for month in self.months:
@@ -33,6 +34,8 @@ class LampTimer:
 
         return days_of_change
 
+    # A list of days that are considered to be ideal
+    # days on which to change the timer
     def days_for_lamp_change(self):
         days = []
         for day in self.days_of_dusk_change():

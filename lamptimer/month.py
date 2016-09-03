@@ -23,7 +23,7 @@ class Month:
         for day in self.days:
             print day
 
-    def get_days_of_rounded_dusk_change(self):
+    def days_of_rounded_dusk_change(self):
         days = []
         last_seen_time = None
         for day in self.days:

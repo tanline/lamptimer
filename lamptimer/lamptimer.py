@@ -28,7 +28,7 @@ class LampTimer:
     def days_of_dusk_change(self):
         days_of_change = []
         for month in self.months:
-            for day in month.get_days_of_rounded_dusk_change():
+            for day in month.days_of_rounded_dusk_change():
                 days_of_change.append(day)
 
         return days_of_change

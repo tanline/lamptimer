@@ -82,10 +82,6 @@ def dusks_differ_by_one_hour(day1, day2):
     else:
         return hour_diff > 0
 
-def print_days_of_rounded_dusk_change(month):
-    for day in month.get_days_of_rounded_dusk_change():
-        print day
-
 def print_days_and_times_for_lamp_change(from_date, to_date):
     lamptimer = LampTimer('Toronto', from_date, to_date)
 

@@ -11,6 +11,14 @@ class Day(object):
 
         return '{}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str)
 
+    def to_csv(self, only_rounded):
+        if only_rounded:
+            date_str = self.date.date()
+            rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
+            return '{}, {}'.format(date_str, rounded_dusk_str)
+        else:
+            return self.__str__
+
     def dusk_time(self):
         return self._dusk
 

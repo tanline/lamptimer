@@ -81,10 +81,3 @@ def dusks_differ_by_one_hour(day1, day2):
         return abs(dusk1.minute - dusk2.minute) == 0
     else:
         return hour_diff > 0
-
-def print_days_and_times_for_lamp_change(from_date, to_date):
-    lamptimer = LampTimer('Toronto', from_date, to_date)
-
-    print 'Date, Dusk Time, Rounded Dusk Time'
-    for day in lamptimer.days_for_lamp_change():
-        print day

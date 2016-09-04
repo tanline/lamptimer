@@ -1,6 +1,6 @@
 import datetime
 from astral import Astral
-from month import Month, Day
+from .month import Month
 
 class LampTimer(object):
     def __init__(self, city, from_date, to_date):

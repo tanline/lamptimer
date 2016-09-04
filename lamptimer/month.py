@@ -1,5 +1,5 @@
-import calendar
-from day import Day
+from .day import Day
+from calendar import monthrange
 
 class Month(object):
     def __init__(self, month, location):
@@ -9,7 +9,7 @@ class Month(object):
 
     def _populate_days(self):
         days = []
-        days_in_month = calendar.monthrange(self.date.year, self.date.month)[1]
+        days_in_month = monthrange(self.date.year, self.date.month)[1]
 
         for i in range(days_in_month):
             new_date = self.date.replace(day=(i+1))

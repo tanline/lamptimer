@@ -2,13 +2,14 @@ import unittest
 import datetime
 from astral import Astral
 from lamptimer import *
+from ..day import Day
 
 class TestLampTimerBase(unittest.TestCase):
     def setUp(self):
         self.location = self.get_astral_city()
 
     def create_day(self, time):
-        return lamptimer.Day(time, self.location)
+        return Day(time, self.location)
 
     @staticmethod
     def get_astral_city():
@@ -52,14 +53,6 @@ class TestLampTimer(TestLampTimerBase):
         ]
 
         self.assertEqual(expected_months, months)
-
-class TestDate(TestLampTimerBase):
-    def test_date_create(self):
-        time = datetime.datetime(2016,01,01)
-        newDay = lamptimer.Day(time, self.location)
-        self.assertEqual(newDay.date, time)
-        self.assertEqual(newDay.location, self.location)
-
 
 class TestMonth(TestLampTimerBase):
     def test_month_create(self):

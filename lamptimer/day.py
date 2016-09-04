@@ -1,3 +1,5 @@
+import datetime
+
 class Day(object):
     def __init__(self, date, location):
         self.date = self._zeroify_date(date)
@@ -38,6 +40,13 @@ class Day(object):
     def _calculate_dusk_time(self):
         sun = self.location.sun(date=self.date, local=True)
         return sun['dusk']
+
+    def calculate_lamp_shutoff_time(self, rounded=False, hours=4):
+        on_length = datetime.timedelta(seconds=(hours*3600))
+        if rounded:
+            return self.rounded_dusk_time() + on_length
+        else:
+            return self._dusk + on_length
 
     @staticmethod
     def _zeroify_date(date):

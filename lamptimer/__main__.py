@@ -1,6 +1,6 @@
 import argparse
 import datetime
-from lamptimer import print_days_and_times_for_lamp_change
+from .lamptimer import print_days_and_times_for_lamp_change
 
 def main(args=None):
     parser = create_parser()
@@ -18,9 +18,10 @@ def main(args=None):
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    date_help = 'a valid date of the form YYYY-MM'
-    parser.add_argument('from_date', help=date_help, type=valid_date)
-    parser.add_argument('to_date', help=(date_help + ". NOTE: date must be greater than or equal to the from_date"), type=valid_date)
+    from_date_help = 'a valid date of the form YYYY-MM'
+    parser.add_argument('from_date', help=from_date_help, type=valid_date)
+    to_date_help = from_date_help + ". NOTE: date must be greater than or equal to the from_date"
+    parser.add_argument('to_date', help=to_date_help, type=valid_date)
     return parser
 
 def valid_date(string):

@@ -1,11 +1,11 @@
 import unittest
 import datetime
+from lamptimer import day
 from .test_lamptimer import TestLampTimerBase
-from ..day import Day
 
 class TestDay(TestLampTimerBase):
     def test_day_create(self):
-        time = datetime.datetime(2016, 01, 01)
-        day = Day(time, self.location)
-        self.assertEqual(day.date, time)
-        self.assertEqual(day.location, self.location)
+        time = datetime.datetime(2016, 1, 1)
+        new_day = day.Day(time, self.location)
+        self.assertEqual(new_day.date, time)
+        self.assertEqual(new_day.location, self.location)

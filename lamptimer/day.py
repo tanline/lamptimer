@@ -1,4 +1,4 @@
-class Day:
+class Day(object):
     def __init__(self, date, location):
         self.date = self._zeroify_date(date)
         self.location = location
@@ -34,4 +34,3 @@ class Day:
     @staticmethod
     def _zeroify_date(date):
         return date.replace(hour=0, minute=0, second=0, microsecond=0)
-

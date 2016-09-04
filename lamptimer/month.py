@@ -1,7 +1,7 @@
-from day import Day
 import calendar
+from day import Day
 
-class Month:
+class Month(object):
     def __init__(self, month, location):
         self.date = month
         self.location = location
@@ -18,7 +18,7 @@ class Month:
         return days
 
     def print_as_csv(self):
-        print('\nDate, Actual Dusk Time, Rounded Dusk Time')
+        print '\nDate, Actual Dusk Time, Rounded Dusk Time'
         for day in self.days:
             print day
 
@@ -27,8 +27,7 @@ class Month:
         last_seen_time = None
         for day in self.days:
             dusk = day.rounded_dusk_time().time()
-            if (dusk != last_seen_time):
+            if dusk != last_seen_time:
                 last_seen_time = dusk
                 days.append(day)
         return days
-

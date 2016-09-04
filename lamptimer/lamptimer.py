@@ -1,8 +1,8 @@
-from month import Month, Day
 import datetime
 from astral import Astral
+from month import Month, Day
 
-class LampTimer:
+class LampTimer(object):
     def __init__(self, city, from_date, to_date):
         self.from_date = from_date
         self.to_date = to_date
@@ -10,10 +10,11 @@ class LampTimer:
         self.location = self._get_astral_city(city)
         self.months = self._populate_months()
 
-    def _get_astral_city(self, city_name):
-        a = Astral()
-        a.solar_depression = 'civil'
-        found_city = a[city_name]
+    @staticmethod
+    def _get_astral_city(city_name):
+        astral = Astral()
+        astral.solar_depression = 'civil'
+        found_city = astral[city_name]
 
         return found_city
 
@@ -53,7 +54,7 @@ class LampTimer:
 # Create a list consisting of datetimes
 # representing the months between the given datetimes
 def month_range(from_date, to_date):
-    l = []
+    month_list = []
     year = from_date.year
     month = from_date.month
     last_added_date = None
@@ -65,9 +66,9 @@ def month_range(from_date, to_date):
                 month = 1
                 year += 1
         last_added_date = datetime.datetime(year, month, 1)
-        l.append(last_added_date)
+        month_list.append(last_added_date)
 
-    return l
+    return month_list
 
 def dusks_differ_by_one_hour(day1, day2):
     dusk1 = day1.rounded_dusk_time().time()
@@ -75,7 +76,7 @@ def dusks_differ_by_one_hour(day1, day2):
 
     hour_diff = abs(dusk1.hour - dusk2.hour)
 
-    if hour_diff ==  1:
+    if hour_diff == 1:
         # Our dusk times are always rounded to the nearest half-hour
         return abs(dusk1.minute - dusk2.minute) == 0
     else:
@@ -86,8 +87,8 @@ def print_days_of_rounded_dusk_change(month):
         print day
 
 def print_days_and_times_for_lamp_change(from_date, to_date):
-    lt = LampTimer('Toronto', from_date, to_date)
+    lamptimer = LampTimer('Toronto', from_date, to_date)
 
     print 'Date, Dusk Time, Rounded Dusk Time'
-    for day in lt.days_for_lamp_change():
+    for day in lamptimer.days_for_lamp_change():
         print day

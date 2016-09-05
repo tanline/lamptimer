@@ -14,10 +14,11 @@ def main(args=None):
         msg = "The From Date must be before, or equal to, the To Date"
         parser.error(msg)
 
+    lamptimer = LampTimer('Toronto', args.from_date, args.to_date)
     if args.only_rounded:
-        print_rounded_times_for_lamp_change(args.from_date, args.to_date)
+        print_rounded_times_for_lamp_change(lamptimer)
     else:
-        print_times_for_lamp_change(args.from_date, args.to_date)
+        print_times_for_lamp_change(lamptimer)
 
 def create_parser():
     parser = argparse.ArgumentParser()
@@ -40,19 +41,15 @@ def valid_date(string):
 def validate_date_pair(from_date, to_date):
     return from_date <= to_date
 
-def print_times_for_lamp_change(from_date, to_date):
-    lamptimer = LampTimer('Toronto', from_date, to_date)
-
+def print_times_for_lamp_change(lamptimer):
     print 'Date, Dusk Time, Rounded Dusk Time'
     for day in lamptimer.days_for_lamp_change():
-        print day
+        print '{}'.format(day)
 
-def print_rounded_times_for_lamp_change(from_date, to_date):
-    lamptimer = LampTimer('Toronto', from_date, to_date)
-
+def print_rounded_times_for_lamp_change(lamptimer):
     print 'Date, Dusk Time'
     for day in lamptimer.days_for_lamp_change():
-        print day.to_csv(True)
+        print '{:only-rounded}'.format(day)
 
 if __name__ == "__main__":
     main()

@@ -7,19 +7,17 @@ class Day(object):
         self._dusk = self._calculate_dusk_time()
 
     def __str__(self):
+        return self.__format__()
+
+    def __format__(self, format):
         date_str = self.date.date()
-        dusk_str = self.dusk_time().strftime('%X%z')
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
 
-        return '{}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str)
-
-    def to_csv(self, only_rounded):
-        if only_rounded:
-            date_str = self.date.date()
-            rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
+        if format == '':
+            dusk_str = self.dusk_time().strftime('%X%z')
+            return '{}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str)
+        if format == 'only-rounded':
             return '{}, {}'.format(date_str, rounded_dusk_str)
-        else:
-            return self.__str__
 
     def dusk_time(self):
         return self._dusk

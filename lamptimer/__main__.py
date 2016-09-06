@@ -22,7 +22,10 @@ def parse_and_validate_args(args):
     return args
 
 def create_parser():
-    parser = argparse.ArgumentParser()
+    description_str = ('Calculate on and off times for an outdoor lamp,'
+                       ' based off the time of dusk.')
+
+    parser = argparse.ArgumentParser(description=description_str)
 
     from_date_help = 'The start of the range. A date of the form YYYY-MM.'
     to_date_help = ('The end of the range. '
@@ -32,6 +35,9 @@ def create_parser():
     parser.add_argument('to_date', help=to_date_help, type=valid_date)
 
     parser.add_argument('--with-dusk', action='store_true', help='show time of dusk in ouput')
+
+    shutoff_help = 'how many hours the lamp should stay on for. defaults to 4'
+    parser.add_argument('--shutoff-after', help=shutoff_help, default=4, type=int)
 
     return parser
 
@@ -47,7 +53,7 @@ def valid_date(string):
 def validate_date_pair(from_date, to_date):
     return from_date <= to_date
 
-def print_times_for_lamp_change(lamptimer, with_dusk=False):
+def print_times_for_lamp_change(lamptimer, with_dusk):
     str_format = '{}'
 
     if with_dusk:

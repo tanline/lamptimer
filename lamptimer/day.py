@@ -22,30 +22,29 @@ class Day(object):
             dusk_minute = 0
         return self.dusk_time().replace(hour=dusk_hour, minute=dusk_minute, second=0)
 
-    def calculate_lamp_shutoff_time(self, rounded=False, hours=4):
+    def calculate_lamp_shutoff_time(self, hours=4):
         on_length = datetime.timedelta(seconds=(hours*3600))
-        if rounded:
-            return self.rounded_dusk_time() + on_length
-        else:
-            return self._dusk + on_length
+        return self.rounded_dusk_time() + on_length
 
     def __str__(self):
         date_str = self.date.date()
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
-        dusk_str = self.dusk_time().strftime('%X%z')
-        return '{}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str)
+        shutoff_str = self.calculate_lamp_shutoff_time().strftime('%X%z')
+        return '{}, {}, {}'.format(date_str, rounded_dusk_str, shutoff_str)
 
     def __format__(self, format):
         formats = {
-            'only-rounded': self._only_rounded_str
+            'with-dusk': self._with_dusk_str,
         }
         func = formats.get(format, self.__str__)
         return func()
 
-    def _only_rounded_str(self):
+    def _with_dusk_str(self):
         date_str = self.date.date()
+        dusk_str = self.dusk_time().strftime('%X%z')
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
-        return '{}, {}'.format(date_str, rounded_dusk_str)
+        shutoff_str = self.calculate_lamp_shutoff_time().strftime('%X%z')
+        return '{}, {}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str, shutoff_str)
 
     def _calculate_dusk_time(self):
         sun = self.location.sun(date=self.date, local=True)

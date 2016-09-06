@@ -3,6 +3,11 @@ import datetime
 from .lamptimer import LampTimer
 
 def main(args=None):
+    args = parse_and_validate_args(args)
+    lamptimer = LampTimer('Toronto', args.from_date, args.to_date)
+    print_times_for_lamp_change(lamptimer, args.with_dusk)
+
+def parse_and_validate_args(args):
     parser = create_parser()
 
     if args is None:
@@ -11,22 +16,23 @@ def main(args=None):
         args = parser.parse_args(args)
 
     if not validate_date_pair(args.from_date, args.to_date):
-        msg = "The From Date must be before, or equal to, the To Date"
+        msg = 'The From Date must be before, or equal to, the To Date'
         parser.error(msg)
 
-    lamptimer = LampTimer('Toronto', args.from_date, args.to_date)
-    if args.only_rounded:
-        print_rounded_times_for_lamp_change(lamptimer)
-    else:
-        print_times_for_lamp_change(lamptimer)
+    return args
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    from_date_help = 'a valid date of the form YYYY-MM'
+
+    from_date_help = 'The start of the range. A date of the form YYYY-MM.'
+    to_date_help = ('The end of the range. '
+                    'A date of the form YYYY-MM. '
+                    'It must be greater than or equal to the from_date.')
     parser.add_argument('from_date', help=from_date_help, type=valid_date)
-    to_date_help = from_date_help + ". NOTE: date must be greater than or equal to the from_date"
     parser.add_argument('to_date', help=to_date_help, type=valid_date)
-    parser.add_argument('--only-rounded', action='store_true')
+
+    parser.add_argument('--with-dusk', action='store_true', help='show time of dusk in ouput')
+
     return parser
 
 def valid_date(string):
@@ -41,15 +47,17 @@ def valid_date(string):
 def validate_date_pair(from_date, to_date):
     return from_date <= to_date
 
-def print_times_for_lamp_change(lamptimer):
-    print 'Date, Dusk Time, Rounded Dusk Time'
-    for day in lamptimer.days_for_lamp_change():
-        print '{}'.format(day)
+def print_times_for_lamp_change(lamptimer, with_dusk=False):
+    str_format = '{}'
 
-def print_rounded_times_for_lamp_change(lamptimer):
-    print 'Date, Dusk Time'
+    if with_dusk:
+        print 'Date, Dusk Time, Timer On, Timer Off'
+        str_format = '{:with-dusk}'
+    else:
+        print 'Date, Timer On, Timer Off'
+
     for day in lamptimer.days_for_lamp_change():
-        print '{:only-rounded}'.format(day)
+        print str_format.format(day)
 
 if __name__ == "__main__":
     main()

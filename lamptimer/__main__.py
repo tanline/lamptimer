@@ -4,7 +4,7 @@ from .lamptimer import LampTimer
 
 def main(args=None):
     args = parse_and_validate_args(args)
-    lamptimer = LampTimer('Toronto', args.from_date, args.to_date)
+    lamptimer = LampTimer('Toronto', args.from_date, args.to_date, args.shutoff_after)
     print_times_for_lamp_change(lamptimer, args.with_dusk)
 
 def parse_and_validate_args(args):

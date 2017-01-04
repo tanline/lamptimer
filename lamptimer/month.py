@@ -2,18 +2,18 @@ from .day import Day
 from calendar import monthrange
 
 class Month(object):
-    def __init__(self, month, location):
+    def __init__(self, month, location, shutoff_after=4):
         self.date = month
         self.location = location
-        self.days = self._populate_days()
+        self.days = self._populate_days(shutoff_after)
 
-    def _populate_days(self):
+    def _populate_days(self, shutoff_after):
         days = []
         days_in_month = monthrange(self.date.year, self.date.month)[1]
 
         for i in range(days_in_month):
             new_date = self.date.replace(day=(i+1))
-            days.append(Day(new_date, self.location))
+            days.append(Day(new_date, self.location, shutoff_after))
 
         return days
 

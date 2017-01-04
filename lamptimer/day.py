@@ -1,10 +1,11 @@
 import datetime
 
 class Day(object):
-    def __init__(self, date, location):
+    def __init__(self, date, location, shutoff_after=4):
         self.date = self._zeroify_date(date)
         self.location = location
         self._dusk = self._calculate_dusk_time()
+        self.shutoff_after = shutoff_after
 
     def dusk_time(self):
         return self._dusk
@@ -29,7 +30,7 @@ class Day(object):
     def __str__(self):
         date_str = self.date.date()
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
-        shutoff_str = self.calculate_lamp_shutoff_time().strftime('%X%z')
+        shutoff_str = self.calculate_lamp_shutoff_time(self.shutoff_after).strftime('%X%z')
         return '{}, {}, {}'.format(date_str, rounded_dusk_str, shutoff_str)
 
     def __format__(self, format):
@@ -43,7 +44,7 @@ class Day(object):
         date_str = self.date.date()
         dusk_str = self.dusk_time().strftime('%X%z')
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
-        shutoff_str = self.calculate_lamp_shutoff_time().strftime('%X%z')
+        shutoff_str = self.calculate_lamp_shutoff_time(self.shutoff_after).strftime('%X%z')
         return '{}, {}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str, shutoff_str)
 
     def _calculate_dusk_time(self):

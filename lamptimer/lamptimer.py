@@ -3,12 +3,12 @@ from astral import Astral
 from .month import Month
 
 class LampTimer(object):
-    def __init__(self, city, from_date, to_date):
+    def __init__(self, city, from_date, to_date, shutoff_after=4):
         self.from_date = from_date
         self.to_date = to_date
         self._validate_dates()
         self.location = self._get_astral_city(city)
-        self.months = self._populate_months()
+        self.months = self._populate_months(shutoff_after)
 
     @staticmethod
     def _get_astral_city(city_name):
@@ -18,10 +18,10 @@ class LampTimer(object):
 
         return found_city
 
-    def _populate_months(self):
+    def _populate_months(self, shutoff_after):
         months = []
         for date in month_range(self.from_date, self.to_date):
-            months.append(Month(date, self.location))
+            months.append(Month(date, self.location, shutoff_after))
 
         return months
 

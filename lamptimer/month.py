@@ -18,7 +18,7 @@ class Month(object):
         return days
 
     def print_as_csv(self):
-        print '\nDate, Actual Dusk Time, Rounded Dusk Time'
+        print '\nDate,Actual Dusk Time,Rounded Dusk Time'
         for day in self.days:
             print day
 

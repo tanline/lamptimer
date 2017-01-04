@@ -31,7 +31,7 @@ class Day(object):
         date_str = self.date.date()
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
         shutoff_str = self.calculate_lamp_shutoff_time(self.shutoff_after).strftime('%X%z')
-        return '{}, {}, {}'.format(date_str, rounded_dusk_str, shutoff_str)
+        return '{},{},{}'.format(date_str, rounded_dusk_str, shutoff_str)
 
     def __format__(self, format):
         formats = {
@@ -45,7 +45,7 @@ class Day(object):
         dusk_str = self.dusk_time().strftime('%X%z')
         rounded_dusk_str = self.rounded_dusk_time().strftime('%X%z')
         shutoff_str = self.calculate_lamp_shutoff_time(self.shutoff_after).strftime('%X%z')
-        return '{}, {}, {}, {}'.format(date_str, dusk_str, rounded_dusk_str, shutoff_str)
+        return '{},{},{},{}'.format(date_str, dusk_str, rounded_dusk_str, shutoff_str)
 
     def _calculate_dusk_time(self):
         sun = self.location.sun(date=self.date, local=True)

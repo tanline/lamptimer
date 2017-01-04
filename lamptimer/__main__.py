@@ -57,10 +57,10 @@ def print_times_for_lamp_change(lamptimer, with_dusk):
     str_format = '{}'
 
     if with_dusk:
-        print 'Date, Dusk Time, Timer On, Timer Off'
+        print 'Date,Dusk Time,Timer On,Timer Off'
         str_format = '{:with-dusk}'
     else:
-        print 'Date, Timer On, Timer Off'
+        print 'Date,Timer On,Timer Off'
 
     for day in lamptimer.days_for_lamp_change():
         print str_format.format(day)

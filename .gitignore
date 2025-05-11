@@ -5,3 +5,5 @@ dist/*
 
 *.swp
 .DS_Store
+
+.venv/

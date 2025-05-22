@@ -3,7 +3,9 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from astral import LocationInfo
+
 from .day import Day
+
 
 @dataclass
 class Month:

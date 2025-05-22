@@ -1,5 +1,6 @@
 from lamptimer.cli import cli
 
+
 def test_cli_prints_hello(capsys):
     cli()
     captured = capsys.readouterr()

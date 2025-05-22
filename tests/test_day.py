@@ -19,10 +19,9 @@ def test_normalize_date():
 def test_dusk_time():
     location = LocationInfo("London", "England", "Europe/London", 51.5, -0.116)
     date = datetime(2023, 10, 5)
-    expected_dusk_time = datetime(2023, 10, 5, 18, 3, 28)
+    expected_dusk_time = datetime(2023, 10, 5, 19, 3, 28)
 
     day = Day(date=date, location=location)
-
 
     assert day.dusk_time.date() == expected_dusk_time.date()
     assert day.dusk_time.time().hour == expected_dusk_time.hour

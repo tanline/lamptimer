@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from astral import LocationInfo
-from src.lamptimer.day import Day
+from lamptimer.day import Day
 
 def test_normalize_date():
     location = LocationInfo("London", "England", "Europe/London", 51.5, -0.116)

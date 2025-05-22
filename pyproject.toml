@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
 [project]
 name = "lamptimer"
 authors = [
@@ -30,3 +34,6 @@ exclude = [
 testpaths = [
     "tests"
 ]
+
+[project.scripts]
+lamptimer-cli = "lamptimer:cli"

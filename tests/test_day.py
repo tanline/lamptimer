@@ -2,6 +2,7 @@ from datetime import datetime
 
 from lamptimer.day import Day
 
+
 def test_normalize_date(london_location):
     # Test with a date that has a time component
     date_with_time = datetime(2023, 10, 5, 15, 30, 45)
@@ -12,6 +13,7 @@ def test_normalize_date(london_location):
     date_at_midnight = datetime(2023, 10, 5)
     normalized_date = Day(date=date_at_midnight, location=london_location).date
     assert normalized_date == datetime(2023, 10, 5, 0, 0, 0)
+
 
 def test_dusk_time(london_location):
     date = datetime(2023, 10, 5)

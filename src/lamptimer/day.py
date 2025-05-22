@@ -5,6 +5,7 @@ from astral import LocationInfo
 from astral.location import Location
 from astral.sun import sun
 
+
 @dataclass
 class Day:
     date: datetime
@@ -30,4 +31,4 @@ class Day:
         """Calculate the dusk time for the given date and location."""
         timezone = Location(self.location).timezone
         sun_info = sun(self.location.observer, date=self.date, tzinfo=timezone)
-        return sun_info['dusk']
+        return sun_info["dusk"]

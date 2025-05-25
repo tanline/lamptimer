@@ -22,6 +22,22 @@ class Day:
         """Return the calculated dusk time."""
         return self._dusk
 
+    @property
+    def rounded_dusk_time(self) -> datetime:
+        """Return the rounded dusk time, adjusted to the nearest half-hour."""
+        dusk_hour = self.dusk_time.hour
+        dusk_minute = self.dusk_time.minute
+
+        if dusk_minute >= 45:
+            dusk_minute = 0
+            dusk_hour += 1
+        elif dusk_minute >= 15:
+            dusk_minute = 30
+        else:
+            dusk_minute = 0
+
+        return self.dusk_time.replace(hour=dusk_hour, minute=dusk_minute, second=0)
+
     @staticmethod
     def _normalize_date(date: datetime) -> datetime:
         """Set the time of the date to midnight."""

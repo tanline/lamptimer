@@ -24,3 +24,16 @@ def test_dusk_time(london_location):
     assert day.dusk_time.time().hour == expected_dusk_time.hour
     assert day.dusk_time.time().minute == expected_dusk_time.minute
     assert day.dusk_time.time().second == expected_dusk_time.second
+
+
+def test_rounded_dusk_time(london_location):
+    date = datetime(2023, 10, 5)
+    expected_rounded_dusk_time = datetime(
+        2023, 10, 5, 19, 0, 0
+    )  # Rounded to nearest half-hour
+    day = Day(date=date, location=london_location)
+
+    assert day.rounded_dusk_time.date() == expected_rounded_dusk_time.date()
+    assert day.rounded_dusk_time.time().hour == expected_rounded_dusk_time.hour
+    assert day.rounded_dusk_time.time().minute == expected_rounded_dusk_time.minute
+    assert day.rounded_dusk_time.time().second == expected_rounded_dusk_time.second

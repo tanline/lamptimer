@@ -1,8 +1,10 @@
+import json
+
+from astral import LocationInfo
+from rich.table import Table
+
 from lamptimer.day import Day
 from lamptimer.month import Month
-from astral import LocationInfo
-
-from rich.table import Table
 
 
 def format_location_info(location: LocationInfo) -> str:
@@ -30,6 +32,30 @@ def format_month_csv(month: Month) -> str:
     lines = ["Date,Dusk Time,Rounded Dusk Time"]
     for day in month.days:
         lines.append(format_day_csv(day))
+    return "\n".join(lines)
+
+
+def format_day_json_data(day: Day) -> dict:
+    return {
+        "date": day.date.strftime("%Y-%m-%d"),
+        "dusk_time": day.dusk_time.strftime("%H:%M:%S"),
+        "rounded_dusk_time": day.rounded_dusk_time.strftime("%H:%M"),
+    }
+
+
+def format_month_json(month: Month) -> str:
+    data = []
+    for day in month.days:
+        data.append(format_day_json_data(day))
+
+    return json.dumps(data, indent=4, default=str)
+
+
+def format_month_jsonl(month: Month) -> str:
+    lines = []
+    for day in month.days:
+        data = format_day_json_data(day)
+        lines.append(json.dumps(data, default=str))
     return "\n".join(lines)
 
 

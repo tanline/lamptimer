@@ -1,7 +1,8 @@
 from datetime import datetime
-from astral import LocationInfo
+from enum import Enum
 
 import typer
+from astral import LocationInfo
 from typing_extensions import Annotated
 from rich.console import Console
 
@@ -16,6 +17,14 @@ from lamptimer.formatters import (
     format_month_jsonl,
 )
 
+
+class OutputFormat(str, Enum):
+    csv = "csv"
+    json = "json"
+    jsonl = "jsonl"
+    table = "table"
+
+
 cli = typer.Typer()
 console = Console()
 
@@ -27,8 +36,8 @@ toronto_location = LocationInfo(
 @cli.command()
 def month(
     format: Annotated[
-        str, typer.Option("--format", "-f", help="Output format")
-    ] = "table",
+        OutputFormat, typer.Option(help="Output format of data.")
+    ] = OutputFormat.table,
 ):
     """Prints the current month's dusk times."""
     location = toronto_location

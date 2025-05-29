@@ -12,6 +12,8 @@ from lamptimer.formatters import (
     format_month_csv,
     format_location_info,
     format_month_table,
+    format_month_json,
+    format_month_jsonl,
 )
 
 cli = typer.Typer()
@@ -37,6 +39,10 @@ def month(
 
     if format == "csv":
         print(format_month_csv(month))
+    elif format == "json":
+        print(format_month_json(month))
+    elif format == "jsonl":
+        print(format_month_jsonl(month))
     else:
         console.print(format_month_table(month))
 

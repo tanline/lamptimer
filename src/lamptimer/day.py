@@ -36,7 +36,17 @@ class Day:
         else:
             dusk_minute = 0
 
-        return self.dusk_time.replace(hour=dusk_hour, minute=dusk_minute, second=0)
+        # Rounded to nearest half-hour include the timezone
+        return datetime(
+            self.dusk_time.year,
+            self.dusk_time.month,
+            self.dusk_time.day,
+            dusk_hour,
+            dusk_minute,
+            0,
+            0,
+            tzinfo=self.dusk_time.tzinfo,
+        )
 
     @staticmethod
     def _normalize_date(date: datetime) -> datetime:

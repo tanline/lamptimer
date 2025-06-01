@@ -16,6 +16,7 @@ from lamptimer.formatters import (
     format_month_json,
     format_month_jsonl,
 )
+from lamptimer.month_summary import format_month_summary
 
 
 class OutputFormat(str, Enum):
@@ -31,6 +32,16 @@ console = Console()
 toronto_location = LocationInfo(
     "Toronto", "Canada", "America/Toronto", 43.641897, -79.386324
 )
+
+
+@cli.command()
+def month_summary():
+    """Prints a summary of the current month's dusk times."""
+    location = toronto_location
+    date_with_time = datetime.now()
+    month = Month(date=date_with_time, location=location)
+
+    print(format_month_summary(month))
 
 
 @cli.command()

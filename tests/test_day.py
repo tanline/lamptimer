@@ -29,7 +29,7 @@ def test_dusk_time(london_location):
 def test_rounded_dusk_time(london_location):
     date = datetime(2023, 10, 5)
     expected_rounded_dusk_time = datetime(
-        2023, 10, 5, 19, 0, 0
+        2023, 10, 5, 19, 0, 0, 0
     )  # Rounded to nearest half-hour
     day = Day(date=date, location=london_location)
 

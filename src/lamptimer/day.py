@@ -9,7 +9,6 @@ from astral.sun import sun
 @dataclass
 class Day:
     date: datetime
-    shutoff_after: int = 4
     _dusk: datetime = field(init=False)
     location: LocationInfo = field(default_factory=LocationInfo)
 

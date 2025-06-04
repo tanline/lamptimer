@@ -4,7 +4,10 @@ from datetime import datetime
 from astral import LocationInfo
 
 from lamptimer.month import Month
-from lamptimer.month_summary import format_month_summary
+from lamptimer.month_summary import (
+    format_month_summary,
+    find_days_with_dusk_time_changes,
+)
 
 
 @pytest.fixture
@@ -18,7 +21,7 @@ def london_month():
 
 
 @pytest.fixture
-def toronto():
+def toronto_month():
     month = Month(
         date=datetime(2025, 6, 1),
         location=LocationInfo("Toronto", "Canada"),
@@ -41,7 +44,7 @@ def test_format_month_summary(london_month):
     assert format_month_summary(london_month) == expected_output
 
 
-def test_format_month_summary_when_no_dates_to_change(toronto):
+def test_format_month_summary_when_no_dates_to_change(toronto_month):
     expected_output = "\n".join(
         [
             "Report for June 2025\n",
@@ -49,4 +52,18 @@ def test_format_month_summary_when_no_dates_to_change(toronto):
         ]
     )
 
-    assert format_month_summary(toronto) == expected_output
+    assert format_month_summary(toronto_month) == expected_output
+
+
+def test_find_days_with_dusk_time_changes(london_month):
+    days_with_changes = find_days_with_dusk_time_changes(london_month)
+
+    assert len(days_with_changes) == 2
+    assert days_with_changes[0].date == datetime(2023, 10, 14)
+    assert days_with_changes[1].date == datetime(2023, 10, 29)
+
+
+def test_find_days_with_dusk_time_changes_no_changes(toronto_month):
+    days_with_changes = find_days_with_dusk_time_changes(toronto_month)
+
+    assert len(days_with_changes) == 0

@@ -1,14 +1,15 @@
 from datetime import timedelta
 
+from lamptimer.day import Day
 from lamptimer.month import Month
 
 
-def format_month_summary(month: Month) -> str:
-    """Return a summary of days when the rounded dusk time changes in the given month."""
+def find_days_with_dusk_time_changes(month: Month) -> list[Day]:
+    """Return a list of days in the month where the rounded dusk time changes."""
     last_date_of_previous_month = month.date - timedelta(days=1)
-    last_month = Month(last_date_of_previous_month, month.location)
+    last_day = Day(date=last_date_of_previous_month, location=month.location)
 
-    last_rounded = last_month.days[-1].rounded_dusk_time if last_month.days else None
+    last_rounded = last_day.rounded_dusk_time
     days_with_changes = []
 
     for day in month.days:
@@ -16,6 +17,13 @@ def format_month_summary(month: Month) -> str:
             # The times are different
             days_with_changes.append(day)
             last_rounded = day.rounded_dusk_time
+
+    return days_with_changes
+
+
+def format_month_summary(month: Month) -> str:
+    """Return a summary of days when the rounded dusk time changes in the given month."""
+    days_with_changes = find_days_with_dusk_time_changes(month)
 
     # Format the output
     lines = [f"Report for {month.date.strftime('%B %Y')}\n"]

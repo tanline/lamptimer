@@ -18,7 +18,7 @@ def format_month_summary(month: Month) -> str:
             last_rounded = day.rounded_dusk_time
 
     # Format the output
-    lines = ["Report for month: " + month.date.strftime("%Y-%m") + "\n"]
+    lines = [f"Report for {month.date.strftime('%B %Y')}\n"]
 
     if not days_with_changes:
         lines.append("All days have the same dusk time. Nothing to do!")

@@ -31,7 +31,7 @@ def test_format_month_summary(london_month):
     # assert that the first line is "Days when rounded dusk time changes:"
     expected_output = "\n".join(
         [
-            "Report for month: 2023-10\n",
+            "Report for October 2023\n",
             "Days when dusk time changes:",
             "2023-10-14: 18:30",
             "2023-10-29: 17:00",
@@ -44,7 +44,7 @@ def test_format_month_summary(london_month):
 def test_format_month_summary_when_no_dates_to_change(toronto):
     expected_output = "\n".join(
         [
-            "Report for month: 2025-06\n",
+            "Report for June 2025\n",
             "All days have the same dusk time. Nothing to do!",
         ]
     )

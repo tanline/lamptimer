@@ -4,7 +4,7 @@ from datetime import datetime
 
 from astral import LocationInfo
 
-from .day import Day
+from lamptimer.day import Day
 
 
 @dataclass
@@ -14,7 +14,13 @@ class Month:
     days: list[Day] = field(init=False)
 
     def __post_init__(self):
+        self.date = self._normalize_date(self.date)
         self.days = self._populate_days()
+
+    @staticmethod
+    def _normalize_date(date: datetime) -> datetime:
+        """Normalize the date to the first day of the month at midnight."""
+        return date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
     def _populate_days(self) -> list[Day]:
         """Populate the month with Day objects."""

@@ -5,7 +5,7 @@ from datetime import datetime
 from astral import LocationInfo
 from rich.table import Table
 
-from lamptimer.formatters import (
+from lamptimer.cli_output import (
     format_location_info,
     format_day_summary,
     format_day_csv,

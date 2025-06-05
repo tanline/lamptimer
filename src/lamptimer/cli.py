@@ -8,15 +8,15 @@ from rich.console import Console
 
 from lamptimer.day import Day
 from lamptimer.month import Month
-from lamptimer.formatters import (
+from lamptimer.cli_output import (
     format_day_summary,
     format_month_csv,
     format_location_info,
     format_month_table,
     format_month_json,
     format_month_jsonl,
+    format_month_summary,
 )
-from lamptimer.month_summary import format_month_summary
 
 
 class OutputFormat(str, Enum):

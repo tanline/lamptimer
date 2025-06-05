@@ -4,7 +4,7 @@ from datetime import datetime
 from astral import LocationInfo
 
 from lamptimer.month import Month
-from lamptimer.month_summary import (
+from lamptimer.cli_output import (
     format_month_summary,
     find_days_with_dusk_time_changes,
 )

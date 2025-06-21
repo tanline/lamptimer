@@ -38,12 +38,17 @@ def month_summary(
     year: Annotated[
         int, typer.Option(help="Year to summarize, defaults to current year.")
     ] = current_date_with_time.year,
+    shutoff_after: Annotated[
+        int, typer.Option(
+            help="Number of hours after dusk to shut off lights, defaults to 4."
+        )
+    ] = 4,
 ):
     """Prints a summary of the current month's dusk times."""
     date_with_time = get_time_from_options(month, year)
     month_data = Month(date=date_with_time, location=cli_state["location"])
 
-    print(format_month_summary(month_data))
+    print(format_month_summary(month_data, shutoff_after))
 
 
 @cli.command()

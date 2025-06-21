@@ -21,7 +21,7 @@ def find_days_with_dusk_time_changes(month: Month) -> list[Day]:
     return days_with_changes
 
 
-def format_month_summary(month: Month) -> str:
+def format_month_summary(month: Month, shutoff_after: int) -> str:
     """Return a summary of days when the rounded dusk time changes in the given month."""
     days_with_changes = find_days_with_dusk_time_changes(month)
 
@@ -34,8 +34,12 @@ def format_month_summary(month: Month) -> str:
         lines.append("Days when dusk time changes:")
 
         for day in days_with_changes:
+            date_str = day.date.strftime('%Y-%m-%d')
+            rounded_dusk_time = day.rounded_dusk_time.strftime('%H:%M')
+            shutoff_time = (day.rounded_dusk_time + timedelta(hours=shutoff_after)).strftime('%H:%M')
+
             lines.append(
-                f"{day.date.strftime('%Y-%m-%d')}: {day.rounded_dusk_time.strftime('%H:%M')}"
+                f"{date_str} | Dusk: {rounded_dusk_time} | Shutoff: {shutoff_time}"
             )
 
     return "\n".join(lines)

@@ -33,14 +33,14 @@ Perfect for automating or optimizing outdoor lighting based on real sunset times
 
 You can run the CLI locally with:
 ```bash
-uv run lamptimer-cli
+uv run lamptimer
 ```
 
 ## CLI Help
 
 To see all available commands and options, run:
 ```bash
-uv run lamptimer-cli --help
+uv run lamptimer --help
 ```
 
 ## Running the Test Suite

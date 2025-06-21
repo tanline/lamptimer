@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum
 
 import typer
 from astral import LocationInfo
@@ -17,13 +16,7 @@ from lamptimer.cli_output import (
     format_month_jsonl,
     format_month_summary,
 )
-
-
-class OutputFormat(str, Enum):
-    csv = "csv"
-    json = "json"
-    jsonl = "jsonl"
-    table = "table"
+from lamptimer.cli_output.output_format import OutputFormat
 
 
 cli = typer.Typer()

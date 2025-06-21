@@ -12,6 +12,7 @@ from .month_summary import (
     format_month_summary,
     find_days_with_dusk_time_changes,
 )
+from .output_format import OutputFormat
 
 __all__ = [
     "format_location_info",
@@ -24,4 +25,5 @@ __all__ = [
     "format_month_jsonl",
     "format_month_summary",
     "find_days_with_dusk_time_changes",
+    "OutputFormat",
 ]

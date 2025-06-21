@@ -39,9 +39,10 @@ def month_summary(
         int, typer.Option(help="Year to summarize, defaults to current year.")
     ] = current_date_with_time.year,
     shutoff_after: Annotated[
-        int, typer.Option(
+        int,
+        typer.Option(
             help="Number of hours after dusk to shut off lights, defaults to 4."
-        )
+        ),
     ] = 4,
 ):
     """Prints a summary of the current month's dusk times."""

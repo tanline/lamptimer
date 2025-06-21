@@ -12,7 +12,7 @@ Perfect for automating or optimizing outdoor lighting based on real sunset times
 
 ## Installation (Local Development)
 
-### Prerequistes
+### Prerequisites
 - Python 3.11
 - [uv package manager](https://github.com/astral-sh/uv)
 

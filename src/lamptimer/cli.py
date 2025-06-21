@@ -21,8 +21,8 @@ from lamptimer.cli_output.output_format import OutputFormat
 
 cli = typer.Typer()
 cli_state = {}
+cli_state["current_date"] = datetime.now()
 console = Console()
-current_date_with_time = datetime.now()
 
 
 def get_time_from_options(month: str, year: int) -> datetime:
@@ -34,10 +34,10 @@ def get_time_from_options(month: str, year: int) -> datetime:
 def month_summary(
     month: Annotated[
         str, typer.Option(help="Month to summarize, defaults to current month.")
-    ] = current_date_with_time.strftime("%B"),
+    ] = cli_state["current_date"].strftime("%B"),
     year: Annotated[
         int, typer.Option(help="Year to summarize, defaults to current year.")
-    ] = current_date_with_time.year,
+    ] = cli_state["current_date"].year,
     shutoff_after: Annotated[
         int,
         typer.Option(
@@ -59,10 +59,10 @@ def month(
     ] = OutputFormat.table,
     month: Annotated[
         str, typer.Option(help="Month to summarize, defaults to current month.")
-    ] = current_date_with_time.strftime("%B"),
+    ] = cli_state["current_date"].strftime("%B"),
     year: Annotated[
         int, typer.Option(help="Year to summarize, defaults to current year.")
-    ] = current_date_with_time.year,
+    ] = cli_state["current_date"].year,
 ):
     """Prints the current month's dusk times."""
     date_with_time = get_time_from_options(month, year)
@@ -81,7 +81,7 @@ def month(
 @cli.command()
 def today():
     """Prints today's dusk time."""
-    day = Day(date=current_date_with_time, location=cli_state["location"])
+    day = Day(date=cli_state["current_date"], location=cli_state["location"])
 
     print(format_day_summary(day))
 

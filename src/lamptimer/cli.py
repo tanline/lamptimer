@@ -68,11 +68,11 @@ def month(
     date_with_time = get_time_from_options(month, year)
     month_data = Month(date=date_with_time, location=cli_state["location"])
 
-    if format == "csv":
+    if format == OutputFormat.csv:
         print(format_month_csv(month_data))
-    elif format == "json":
+    elif format == OutputFormat.json:
         print(format_month_json(month_data))
-    elif format == "jsonl":
+    elif format == OutputFormat.jsonl:
         print(format_month_jsonl(month_data))
     else:
         console.print(format_month_table(month_data))

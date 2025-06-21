@@ -36,12 +36,12 @@ def test_format_month_summary(london_month):
         [
             "Report for October 2023\n",
             "Days when dusk time changes:",
-            "2023-10-14: 18:30",
-            "2023-10-29: 17:00",
+            "2023-10-14 | Dusk: 18:30 | Shutoff: 22:30",
+            "2023-10-29 | Dusk: 17:00 | Shutoff: 21:00",
         ]
     )
 
-    assert format_month_summary(london_month) == expected_output
+    assert format_month_summary(london_month, 4) == expected_output
 
 
 def test_format_month_summary_when_no_dates_to_change(toronto_month):
@@ -52,7 +52,7 @@ def test_format_month_summary_when_no_dates_to_change(toronto_month):
         ]
     )
 
-    assert format_month_summary(toronto_month) == expected_output
+    assert format_month_summary(toronto_month, 2) == expected_output
 
 
 def test_find_days_with_dusk_time_changes(london_month):

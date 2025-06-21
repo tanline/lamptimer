@@ -32,4 +32,4 @@ testpaths = [
 ]
 
 [project.scripts]
-lamptimer = "lamptimer:cli"
+lamptimer = "lamptimer.cli:cli"

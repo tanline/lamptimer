@@ -34,9 +34,11 @@ def format_month_summary(month: Month, shutoff_after: int) -> str:
         lines.append("Days when dusk time changes:")
 
         for day in days_with_changes:
-            date_str = day.date.strftime('%Y-%m-%d')
-            rounded_dusk_time = day.rounded_dusk_time.strftime('%H:%M')
-            shutoff_time = (day.rounded_dusk_time + timedelta(hours=shutoff_after)).strftime('%H:%M')
+            date_str = day.date.strftime("%Y-%m-%d")
+            rounded_dusk_time = day.rounded_dusk_time.strftime("%H:%M")
+            shutoff_time = (
+                day.rounded_dusk_time + timedelta(hours=shutoff_after)
+            ).strftime("%H:%M")
 
             lines.append(
                 f"{date_str} | Dusk: {rounded_dusk_time} | Shutoff: {shutoff_time}"

@@ -45,7 +45,7 @@ uv run lamptimer-cli --help
 
 ## Running the Test Suite
 
-To run all tests:
+To run all tests locally:
 ```bash
 uv run pytest
 ```
@@ -54,6 +54,10 @@ To run a specific test file:
 ```bash
 uv run pytest tests/test_day.py
 ```
+
+### Continuous Integration
+
+All tests are automatically run on every push using GitHub Actions. See `.github/workflows/ci.yml` for the workflow configuration.
 
 ## Code Style
 

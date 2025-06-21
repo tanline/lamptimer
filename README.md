@@ -1,7 +1,64 @@
 # Lamp Timer
 
-A program to help determine the "best" time to turn on and off, the outdoor lamp, one month at a time.
+Lamp Timer is a CLI tool that calculates the best times to turn your outdoor lamp on and off, based on astronomical dusk for your location. For any city and month, it:
 
-The lamp is used in the evening and ideally would be turned on at dusk everyday, and turned off after 4 hours.
+- Calculates daily dusk times using precise astronomical data
+- Rounds dusk times to the nearest half-hour
+- Supports output as table, CSV, JSON, or JSONL
+- Highlights days when dusk time changes
+- Lets you fully configure the location (city, region, timezone, latitude, longitude)
 
-The reported times will be rounded to the nearest half-hour for simplicity.
+Perfect for automating or optimizing outdoor lighting based on real sunset times.
+
+## Installation (Local Development)
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/tanline/lamptimer.git
+   cd lamptimer
+   ```
+
+2. **Install dependencies using uv:**
+   ```bash
+   uv pip install -e .[dev]
+   ```
+   Or, if you prefer pip:
+   ```bash
+   pip install -e .[dev]
+   ```
+
+3. **(Optional) Activate a virtual environment:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
+
+## Running the CLI
+
+You can run the CLI locally with:
+```bash
+uv run lamptimer-cli
+```
+Or, if installed with pip:
+```bash
+lamptimer-cli
+```
+
+## Running the Test Suite
+
+To run all tests:
+```bash
+pytest
+```
+
+To run a specific test file:
+```bash
+pytest tests/test_day.py
+```
+
+## Code Style
+
+This project uses [ruff](https://github.com/astral-sh/ruff) for linting. To check code style:
+```bash
+ruff check .
+```

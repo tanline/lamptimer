@@ -1,3 +1,7 @@
+"""
+Main CLI entrypoint and command definitions for Lamp Timer.
+"""
+
 from datetime import datetime
 
 import typer

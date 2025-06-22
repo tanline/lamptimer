@@ -1,3 +1,7 @@
+"""
+Enum for supported output formats in the CLI (csv, json, jsonl, table).
+"""
+
 from enum import Enum
 
 

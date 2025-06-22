@@ -1,3 +1,7 @@
+"""
+Defines the Day class for dusk and lamp timing calculations.
+"""
+
 from dataclasses import dataclass, field
 from datetime import datetime
 

@@ -1,3 +1,7 @@
+"""
+Month class for managing a collection of Day objects and their dusk times.
+"""
+
 from calendar import monthrange
 from dataclasses import dataclass, field
 from datetime import datetime

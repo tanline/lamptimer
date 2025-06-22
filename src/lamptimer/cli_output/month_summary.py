@@ -1,3 +1,7 @@
+"""
+Helpers for summarizing dusk time changes and formatting month summaries.
+"""
+
 from datetime import timedelta
 
 from lamptimer.day import Day
